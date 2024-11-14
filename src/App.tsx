@@ -5,18 +5,21 @@ import Sidebar from './components/Sidebar';
 import MainContent from './components/MainContent';
 import { ThemeProvider } from './context/ThemeContext';
 import { SidebarProvider } from './context/SidebarContext';
+import { AudioProvider } from './context/AudioContext';
 
 function App() {
   return (
     <ThemeProvider>
       <SidebarProvider>
-        <div className="h-screen flex flex-col dark:bg-zinc-900 transition-colors duration-300">
-          <div className="flex-1 flex overflow-hidden">
-            <Sidebar />
-            <MainContent />
+        <AudioProvider>
+          <div className="h-screen flex flex-col dark:bg-zinc-900 transition-colors duration-300">
+            <div className="flex-1 flex overflow-hidden">
+              <Sidebar />
+              <MainContent />
+            </div>
+            <Player />
           </div>
-          <Player />
-        </div>
+        </AudioProvider>
       </SidebarProvider>
     </ThemeProvider>
   );
