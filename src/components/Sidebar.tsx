@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Search, Library, ChevronLeft } from 'lucide-react';
+import { Home, Search, Library, ChevronLeft, Radio, Sun, Moon } from 'lucide-react';
 import { useSidebar } from '../context/SidebarContext';
 import { useTheme } from '../context/ThemeContext';
 
