@@ -1,74 +1,54 @@
-import { FiMenu, FiHome, FiRadio, FiCalendar } from 'react-icons/fi';
+import React from 'react';
+import { Home, Search, Library, ChevronLeft } from 'lucide-react';
+import { useSidebar } from '../context/SidebarContext';
 import { useTheme } from '../context/ThemeContext';
-import { BsSun, BsMoon } from 'react-icons/bs';
 
-type SidebarProps = {
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
-};
-
-export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
-  const { isDarkMode, toggleTheme } = useTheme();
+const Sidebar = () => {
+  const { isOpen, toggleSidebar } = useSidebar();
+  const { isDark, toggleTheme } = useTheme();
 
   return (
-    <div
-      className={`${
-        isOpen ? 'w-64' : 'w-20'
-      } bg-gray-100 dark:bg-gray-800 transition-all duration-300 flex flex-col`}
-    >
-      <div className="p-4 flex items-center justify-between">
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg"
-        >
-          <FiMenu size={24} />
-        </button>
-        {isOpen && <h1 className="font-bold text-xl">Radio Miseria</h1>}
+    <aside className={`${isOpen ? 'w-64' : 'w-20'} bg-black flex flex-col transition-all duration-300 relative`}>
+      <button
+        onClick={toggleSidebar}
+        className="absolute -right-4 top-6 bg-black p-2 rounded-full z-50"
+      >
+        <ChevronLeft className={`w-4 h-4 text-white transition-transform duration-300 ${!isOpen ? 'rotate-180' : ''}`} />
+      </button>
+
+      <div className="p-6">
+        <div className="flex items-center gap-4 text-zinc-200">
+          <Radio className="w-8 h-8" />
+          {isOpen && <span className="font-bold text-xl">Radio Miseria</span>}
+        </div>
+
+        <nav className="mt-10 space-y-4">
+          <a href="#" className="flex items-center gap-4 text-zinc-200 hover:text-white transition-colors">
+            <Home className="w-6 h-6" />
+            {isOpen && <span>Inicio</span>}
+          </a>
+          <a href="#" className="flex items-center gap-4 text-zinc-200 hover:text-white transition-colors">
+            <Search className="w-6 h-6" />
+            {isOpen && <span>Buscar</span>}
+          </a>
+          <a href="#" className="flex items-center gap-4 text-zinc-200 hover:text-white transition-colors">
+            <Library className="w-6 h-6" />
+            {isOpen && <span>Tu Biblioteca</span>}
+          </a>
+        </nav>
       </div>
 
-      <nav className="flex-1 px-4">
-        <ul className="space-y-2">
-          <li>
-            <a
-              href="#"
-              className="flex items-center p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg"
-            >
-              <FiHome size={24} />
-              {isOpen && <span className="ml-3">Inicio</span>}
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="flex items-center p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg"
-            >
-              <FiRadio size={24} />
-              {isOpen && <span className="ml-3">En Vivo</span>}
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="flex items-center p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg"
-            >
-              <FiCalendar size={24} />
-              {isOpen && <span className="ml-3">Programación</span>}
-            </a>
-          </li>
-        </ul>
-      </nav>
-
-      <div className="p-4">
+      <div className="mt-auto p-6">
         <button
           onClick={toggleTheme}
-          className="flex items-center p-2 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg w-full"
+          className="flex items-center gap-4 text-zinc-200 hover:text-white transition-colors"
         >
-          {isDarkMode ? <BsSun size={24} /> : <BsMoon size={24} />}
-          {isOpen && (
-            <span className="ml-3">{isDarkMode ? 'Modo Claro' : 'Modo Oscuro'}</span>
-          )}
+          {isDark ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
+          {isOpen && <span>{isDark ? 'Modo Claro' : 'Modo Oscuro'}</span>}
         </button>
       </div>
-    </div>
+    </aside>
   );
 }
+
+export default Sidebar;

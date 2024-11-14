@@ -1,21 +1,23 @@
-import { useState } from 'react';
-import Sidebar from './components/Sidebar';
+import React from 'react';
+import { Menu, Radio, Clock, ListMusic, Sun, Moon, ChevronLeft, ChevronRight } from 'lucide-react';
 import Player from './components/Player';
+import Sidebar from './components/Sidebar';
 import MainContent from './components/MainContent';
 import { ThemeProvider } from './context/ThemeContext';
+import { SidebarProvider } from './context/SidebarContext';
 
 function App() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
   return (
     <ThemeProvider>
-      <div className="flex h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
-        <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <MainContent />
+      <SidebarProvider>
+        <div className="h-screen flex flex-col dark:bg-zinc-900 transition-colors duration-300">
+          <div className="flex-1 flex overflow-hidden">
+            <Sidebar />
+            <MainContent />
+          </div>
           <Player />
         </div>
-      </div>
+      </SidebarProvider>
     </ThemeProvider>
   );
 }
